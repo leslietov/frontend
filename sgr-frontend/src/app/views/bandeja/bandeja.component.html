@@ -1,0 +1,209 @@
+<div class="animated fadeIn">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Correos
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Correo Origen</th>
+                                <th>N°Resolucion</th>
+                                <th>Fecha de Envio</th>
+                                <th style="text-align:center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let bandeja of bandejas | paginate: {itemsPerPage:5, currentPage: pageActual}">
+                                <td>{{bandeja.correo_usuario}}</td>
+                                <td>{{bandeja.filename}}</td>
+                                <td>{{bandeja.createdAt}}</td>
+
+                                <td style="text-align:center ">
+
+                                  <a href="http://localhost:8010/api/get-file-resolucion/{{bandeja.filename}}" target="_blank">Ver resolución</a>
+
+                                  <!--  <button type="button" class="btn btn-secondary mr-1" data-toggle="modal" (click)="largeModal.show() && getResolucionPdf(res.link_ftp)">
+                                                ver
+                                              </button> -->
+
+
+
+                                </td>
+
+                                <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Resolucion : {{bandeja.num_resolucion}} </h4>
+
+
+
+
+                                                <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                          </button>
+
+
+                                            </div>
+
+
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-7">
+                                                        <form #registerForm="ngForm" action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                                            <div class="form-group row">
+                                                                <label class="col-md-3 col-form-label">Tipo</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{bandeja.descripcion_tipo_resolucion}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-md-3 col-form-label" for="text-input">N°Resolucion</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{bandeja.num_resolucion}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-md-3 col-form-label" for="text-input">N°Expediente</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{bandeja.expediente_resolucion}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-md-3 col-form-label" for="date-input">Fecha resolucion</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{bandeja.createdAt}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-md-3 col-form-label" for="textarea-input">Dependencia</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{bandeja.area_display_name}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-md-3 col-form-label" for="textarea-input">Oficina Origen</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{bandeja.oficina_origen}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-md-3 col-form-label" for="textarea-input">Descripcion</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{bandeja.descripcion_resolucion}}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-md-3 col-form-label" for="textarea-input">Motivo</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{bandeja.tipresmotdes}}</p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group row">
+                                                                <label class="col-md-3 col-form-label" for="text-input">Vista Previa</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"></p>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <div class="row">
+                                                            <label class="col-md-12">Vista previa</label>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;">
+                                                                </pdf-viewer>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                            <!-- <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" (click)="largeModal.hide()">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                </div>-->
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <!-- /.modal -->
+
+
+
+
+
+
+                            </tr>
+
+
+
+
+
+
+
+                        </tbody>
+                    </table>
+                  <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+                    <!--<ul class="pagination float-right">
+                        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul> -->
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+    </div>
+    <!--/.col-->
+
+
+
+
+
+</div>
+
+<!--/.row-->

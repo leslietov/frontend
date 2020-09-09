@@ -1,0 +1,53 @@
+
+  <div class="row animated fadeIn">
+      <div class="col-md-6">
+          <div class="card card-body">
+              <div class="row">
+                  <div class="col-sm-12 col-xs-12">
+                      <form ngNative #f="ngForm"class="form p-t-20">
+                          <div class="form-group">
+                              <b><label for="exampleInputuname">Nombre  de Perfil:</label></b>
+                              <div class="input-group">
+                                  <div class="input-group-addon"> <i class="ti-user"></i></div>
+                                  {{usuario.name}} {{usuario.apellidoPaterno}} {{usuario.apellidoMaterno}} 
+
+                                </div>  
+                          </div>
+                          
+
+                          <div class="form-group">
+                                <b><label for="exampleInputEmail1">Correo de usuario:</label> </b>
+                                <div class="input-group">
+                                    <div class="input-group-addon"> <i class="ti-email"></i></div>
+                                       {{usuario.email}}
+  
+                                   </div>  
+                            </div>
+
+                            <div class="form-group">
+                                   <b><label for="exampleInputEmail1">Dependencia:</label> </b> 
+                                    <div class="input-group">
+                                        <div class="input-group-addon"> <i class="ti-email"></i></div>
+                                       {{usuario.dependencia}}
+                                       
+                                    </div>  
+                            </div>
+
+                            <div class="form-group">
+                                <b><label for="exampleInputEmail1">Perfil :</label> </b> 
+                                 <div class="input-group">
+                                     <div class="input-group-addon"> <i class="ti-email"></i></div>
+                                    
+                                    {{tiporesolucion}}
+                                 </div>  
+                         </div>
+                                      
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+   
+
+
+

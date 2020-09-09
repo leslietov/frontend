@@ -1,0 +1,85 @@
+<div class="app-body">
+    <div class="login-cover">
+        <div class="login-cover-image"><img src="../../../../assets/img/login/bg-6.jpg" data-id="login-cover-image" alt=""></div>
+        <div class="login-cover-bg"></div>
+    </div>
+    <main class="main d-flex align-items-center">
+        <div class="container">
+
+
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+
+
+                    <div class="card-group">
+
+
+                        <div class="card p-4 login-v2">
+                            <div class="login-header">
+                                <div class="texto2">
+                                    <span style="font-size:25px">
+                                                            SISTEMA DE GESTIÓN DE RESOLUCIONES
+                                    
+                                                    </span>
+                                    <br>
+
+
+                                    <br>
+                                </div>
+
+                            </div>
+
+                            <div class="card-body">
+
+
+                                <form #loginForm="ngForm">
+                                    <div class="texto3">
+                                        Recursos Humanos
+                                    </div>
+                                    <p class="text-muted texto1">Ingrese sus datos</p>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="icon-user"></i></span>
+                                        </div>
+
+                                        <!--  <input type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" placeholder="Usuario" autocomplete="username" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+                                        <span *ngIf="!email.valid && email.touched"> El correo no es correcto </span>
+                                        <div class="input-group-prepend ">
+                                            <span class="input-group-text boton1">@unmsm.edu.pe</span>
+                                        </div>-->
+
+                                        <input type="text" name="usuario" #usuario="ngModel" [(ngModel)]="user.usuario" class="form-control" placeholder="usuario" autocomplete="username" required>
+                                        <div class="input-group-prepend ">
+                                            <span class="input-group-text boton1">@unmsm.edu.pe</span>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="input-group mb-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="icon-lock"></i></span>
+                                        </div>
+                                        <input type="password" name="password" #password="ngModel" [(ngModel)]="user.contrasena" class="form-control" placeholder="Contraseña" required>
+                                        <span *ngIf="!password.valid && password.touched">La contraseña es obligatoria</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block" (click)="registrarlogin()" [disabled]="!loginForm.form.valid">Ingresar</button>
+                                            <span *ngIf="status =='error'">
+                                                <router-outlet name="dashboard">
+                                                </router-outlet>
+                                            
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

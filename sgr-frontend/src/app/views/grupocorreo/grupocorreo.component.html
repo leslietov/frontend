@@ -1,0 +1,256 @@
+<div class="animated fadeIn">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Correos
+                </div>
+                <div class="card-body ">
+                    <div class="row align-items-center ">
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">#</th>
+                                <th style="text-align:center">Nombre</th>
+                                <th style="text-align:center">Descripción</th>
+                                <th style="text-align:center">Fecha de Creación</th>
+                                <th style="text-align:center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            <tr *ngFor="let grupo of grupoCorreos  | paginate: {itemsPerPage: 5, currentPage: pageActual} ; index as i">
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{grupo.name_group}}</td>
+                                <td>{{grupo.description}}</td>
+                                <td style="text-align: center;">{{grupo.createdAt}}</td>
+                                <td align="center"><i (click)="deleteGrupo(grupo)" style="cursor: pointer"
+                                    class="material-icons">
+                                    delete_forever
+                                </i>
+                                  <i class="material-icons" style="cursor: pointer" (click)="editarGrupo( grupo ); listartCorreos(grupo.id_group);editlargeModal.show()">
+                                    edit
+                                  </i>
+
+                                  <div bsModal class="modal fade bd-example-modal-lg" #editlargeModal="bs-modal" tabindex="-1"
+                                       role="dialog" aria-labelledby="editexampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="editexampleModalLabel">Editar Grupo</h5>
+                                          <button type="button" class="close" data-dismiss="modal"
+                                                  aria-label="Close">
+                                            <span aria-hidden="true" (click)="editlargeModal.hide()">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <form #registerForm="ngForm" action="" method="post" enctype="multipart/form-data"
+                                                class="form-horizontal">
+                                            <!-- <div class="form-group row">
+                                                <label class="col-md-3 col-form-label">Grupo :</label>
+
+                                            </div>-->
+
+
+                                            <div class="form-group row">
+                                              <label class="col-md-3 col-form-label" for="text-input">Nombre:</label>
+                                              <div class="col-md-9">
+                                                <input type="text" id="text-input" name="name_group" #name_group="ngModel" class="form-control"
+                                                       placeholder="Nombre de grupo" [(ngModel)]="editName_group" required
+                                                       minlength="2" />
+
+
+                                                <span *ngIf="name_group.errors?.required  && name_group.touched"
+                                                      style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+                                              </div>
+                                            </div>
+
+
+                                            <div class="form-group row">
+                                              <label class="col-md-3 col-form-label" for="textarea1">Descripción:</label>
+                                              <div class="col-md-9">
+                                                <textarea id="textarea1" name="desc" #desc="ngModel" class="form-control"
+                                                  placeholder="" [(ngModel)]="editDescription" required></textarea>
+                                                    <span *ngIf="desc.errors?.required  && desc.touched"
+                                                      style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+
+                                              </div>
+                                            </div>
+
+
+                                            <table class="table">
+                                              <thead>
+                                              <th scope="col">#</th>
+                                              <th scope="col">Correo</th>
+                                              </thead>
+                                              <tbody>
+                                              <tr *ngFor="let correo of editCorreos; let i = index">
+                                                <th scope="row">{{i+1}}</th>
+                                                <td>
+                                                  <input type="text"  id="email-input" name="email-input{{i}}" class="form-control" [(ngModel)]="editCorreos[i].email"
+                                                         minlength="2" />
+                                                </td>
+                                                <td style="text-align: center">
+                                                  <i  style="cursor: pointer"
+                                                     class="material-icons" (click)="borrarCorreo(correo)">
+                                                    delete_forever
+                                                  </i>
+                                                </td>
+                                              </tr>
+                                              </tbody>
+                                            </table>
+
+
+                                            <button type="button" class="btn btn-secondary" (click)="agregarCorreoModal(grupo)">
+                                              Agregar correo
+                                            </button>
+
+
+                                            <!-- Button trigger modal -->
+
+
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="registerForm" tabindex="-1" role="dialog"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                              <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    Se registro con éxito
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+                                          </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-primary" (click)="actualizarGrupo(grupo)">
+                                            Actualizar
+                                          </button>
+                                          <button type="button" class="btn btn-secondary"
+                                                  data-dismiss="modal" (click)="editlargeModal.hide()">Close</button>
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+
+                                <td style="text-align:center ">
+                                    <button type="button" class="btn btn-secondary mr-1" data-toggle="modal"
+                                        data-target="#largeModal" (click)="listartCorreos(grupo.id_group)">
+                                        ver
+                                    </button>
+                                    <div class="modal fade bd-example-modal-lg" id="largeModal" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Lista de Correos</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Correo</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let correo of Correos; index as i">
+                                                                <th scope="row">{{i+1}}</th>
+                                                                <td>{{correo.email}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <!-- <td style="text-align:center">
+                                    <div>
+                                        <button class='btn btn-lg ' style='background-color:transparent;'>
+                                            <div style='text-align:center;'><i class="far fa-trash-alt"></i></div>
+                                        </button>
+                                    </div>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                  <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+                    <!-- <ul class="pagination float-right">
+                        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul> -->
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+    </div>
+    <!--/.col-->
+
+
+
+
+
+</div>
+
+<!--/.row-->

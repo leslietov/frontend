@@ -1,0 +1,152 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+
+
+            <div class="card-header">
+                <strong>Nuevo grupo</strong>
+            </div>
+            <div class="card-body">
+                <form #registerForm="ngForm" action="" method="post" enctype="multipart/form-data"
+                    class="form-horizontal">
+                    <!-- <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Grupo :</label>
+
+                    </div>-->
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input">Nombre:</label>
+                        <div class="col-md-8">
+                            <input type="text" id="text-input" name="name_group" #name_group="ngModel" class="form-control"
+                                placeholder="Nombre de grupo" [(ngModel)]="grupocorreo.name_group" required
+                                minlength="2" />
+
+
+                            <span *ngIf="name_group.errors?.required  && name_group.touched"
+                                style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="textarea1">Descripción:</label>
+                        <div class="col-md-8">
+                            <textarea id="textarea1" name="desc" #desc="ngModel" class="form-control"
+                                placeholder="Breve descripción del grupo a crear" [(ngModel)]="grupocorreo.description" required></textarea>
+                            <span *ngIf="desc.errors?.required  && desc.touched"
+                                style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="textarea2">Correos a agregar:</label>
+                        <div class="col-md-8">
+                            <input id="textarea2" name="correos" #correos="ngModel" class="form-control"
+                                placeholder=""  [(ngModel)]="selectEmail" id="emailInput"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                placeholder="ejemplo@unmsm.edu.pe" #emailInput="ngModel"
+                                email />
+                            <span *ngIf="correos.errors?.required  && correos.touched && emailInput.errors?.required "
+                                style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+
+                        </div>
+                    </div>
+                   
+
+                        
+
+                    <div class="card-body ">
+                        <div class="row align-items-center ">
+                            <div class="">
+                                <button type="button" class="btn btn-sm btn-primary "
+                                    (click)=agregarCorreo(emailInput)>Agregar Grupo</button>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card-body col-4">
+
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Correo</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let email of listEmail">
+                                        <td style="vertical-align: middle;">
+                                            <p style="width: 180px; margin-bottom: 0">{{email}}</p>
+                                        </td>
+                                        <td align="center"><i (click)="deleteEmail(email)"
+                                                class="material-icons">
+                                                delete_forever
+                                            </i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Button trigger modal -->
+                    
+
+                    <button type="submit" class="btn btn-primary" (click)="registrar(registerForm)" ><mat-spinner style="float:left; margin-right: 10px" *ngIf="spin" [diameter]="20" ></mat-spinner> Crear</button>
+
+
+                  
+
+
+                    <button type="button" class="btn btn-primary" (click)="clean(registerForm)">
+                        Limpiar
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="registerForm" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Se registro con éxito
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+</div>
+<!--/.col-->

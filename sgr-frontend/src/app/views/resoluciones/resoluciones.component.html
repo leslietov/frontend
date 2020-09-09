@@ -1,0 +1,406 @@
+<div class="row">
+    <div class="col-md">
+        <div class="card">
+            <div class="card-header">
+                <strong>OPCIONES DE BUSQUEDA</strong>
+            </div>
+
+            <div class="card-body">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="form-group row">
+                        <div class="form-group row col-sm-6 ">
+                            <label class="col-md-3 col-form-label" for="select1 ">Tipo</label>
+                            <div class="col-md-7">
+
+                                    <div *ngIf="_userService.usuario.codperfil==231">JEFATURAL </div>
+                                    <div *ngIf="_userService.usuario.codperfil==232">DECANAL </div>
+                                    <div *ngIf="_userService.usuario.codperfil==233">RECTORAL </div>
+                                    <div *ngIf="_userService.usuario.codperfil==234">DIRECTORAL </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row col-sm-6">
+                            <label class="col-md-3 col-form-label stilo2">Dependencia</label>
+                            <div class="col-md-7 ">
+                                <mat-form-field>
+                                    <mat-label>Dependencia</mat-label>
+                                    <mat-select [(ngModel)]="optionDependencia" name="optiondep">
+                                      <mat-option  >--</mat-option>
+                                        <mat-option [(value)]="dep.id_area" *ngFor="let dep of dependencias" >
+                                            {{dep.area_display_name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group row col-sm-6 ">
+                            <label class="col-md-3 col-form-label stilo2">Oficina Origen</label>
+                            <div class="col-md-7 ">
+                                <mat-form-field>
+                                    <mat-label>Oficina Origen</mat-label>
+                                    <mat-select [(ngModel)]="optionOrigen" name="optionorig">
+                                        <mat-option [(value)]="depYuni.id_area"
+                                            *ngFor="let depYuni of dependenciasYunidades" >
+                                            {{depYuni.area_display_name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="form-group row ">
+                        <div class="form-group row col-sm-4 ">
+                            <label class="col-md-5 col-form-label " for="select1 ">N° Resolucion</label>
+                            <div class="col-md-7 ">
+                                <input type="text " class="form-control " placeholder="N° Resolucion "
+                                    [(ngModel)]="resolucionV.num_resolucion " name="numResolucion ">
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group row col-sm-4 ">
+                            <label class="col-md-4 col-form-label " for="select1 ">Motivo</label>
+                            <div class="col-md-7 ">
+                                <select id="select1 " name="select1" class="form-control " [(ngModel)]="optionMotivo"
+                                    (change)="changeMotivo()">
+                                    <option *ngFor="let mot of motivos " [ngValue]="mot.cod_motivo">{{mot.tipresmotdes}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row col-sm-4 ">
+                            <label class=" col-md-5 col-form-label " for="select1 ">N° Expediente</label>
+                            <div class="col-md-7 ">
+                                <input type="text " class="form-control " id="name " placeholder="N° Expediente "
+                                    [(ngModel)]="resolucionV.num_expediente" name="num_Expediente">
+                            </div>
+                        </div>
+                    </div>
+                  <!--
+                    <div class="form-group row ">
+                        <div class="form-group row col-sm-4 ">
+                            <label class="col-md-5 col-form-label " for="select1 ">Apellidos</label>
+                            <div class="col-md-7 ">
+                                <input type="text " class="form-control " id="apellido" placeholder="Apellidos ">
+                            </div>
+                        </div>
+                        <div class="form-group row col-sm-4 ">
+                            <label class="col-md-4 col-form-label " for="select1 ">Dni</label>
+                            <div class="col-md-7 ">
+                                <input type="text " class="form-control " id="dni" placeholder="Dni ">
+                            </div>
+                        </div>
+                        <div class="form-group row col-sm-4 ">
+                            <label class="col-md-5 col-form-label " for="select1 ">Nombre</label>
+                            <div class="col-md-7 ">
+                                <input type="text " class="form-control " id="name" placeholder="Nombre ">
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="form-group row ">
+
+                        <div class="form-group row col-sm-4 ">
+
+                        </div>
+                    </div>
+
+                    <div class="card-body ">
+                        <div class="row align-items-center ">
+                            <div class="col-6 col-sm-4 col-md mb-3 mb-xl-0 text-center ">
+                                <button type="button" class="btn btn-sm btn-primary "
+                                    (click)="buscarResolucion() ">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="animated fadeIn ">
+                        <div class="row ">
+
+                            <div class="col-lg-12 ">
+
+
+
+
+
+
+                                <div class="card ">
+                                    <div class="card-header ">
+                                        <i class="fa fa-align-justify "></i> Resoluciones
+                                    </div>
+                                    <div class="card-body ">
+                                        <table class="table table-bordered ">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:10%">N°Resolucion</th>
+                                                    <th>N°Expediente</th>
+
+                                                    <th>Dependencia</th>
+                                                    <th>Descripcion</th>
+                                                    <th style="width:10%">Fecha</th>
+
+                                                    <th style="text-align:center ">Detalle</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let res of resoluciones  | paginate: {itemsPerPage: 5, currentPage: pageActual} ; index as i">
+                                                    <td>{{res.num_resolucion}}</td>
+                                                    <td>{{res.num_expediente}}</td>
+                                                    <td>{{res.dep}}</td>
+
+                                                    <td>
+                                                        {{res.descripcion_resolucion}}
+                                                    </td>
+
+                                                    <td>
+                                                        {{res.createdAt}}
+                                                    </td>
+                                                    <td style="text-align:center ">
+                                                        <!--<button type="button " class="btn btn-brand btn-sm btn-twitter mr-1 " style="margin-bottom: 4px " data-toggle="modal" data-target=".bd-example-modal-lg">
+                                                              Ver
+                                                        </button>-->
+                                                        <button type="button" class="btn btn-secondary mr-1"
+                                                            data-toggle="modal"
+                                                            (click)="largeModal.show();getResolucionPdf(res.link_ftp)">
+                                                            ver
+                                                        </button>
+
+                                                        <div bsModal #largeModal="bs-modal" class="modal fade"
+                                                            tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-lg" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4 class="modal-title">Resolucion :
+                                                                            {{res.num_resolucion}} </h4>
+
+
+
+
+                                                                        <button type="button" class="close"
+                                                                            (click)="largeModal.hide()"
+                                                                            aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+
+
+                                                                    </div>
+
+
+                                                                    <div class="card-body">
+
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <form #registerForm="ngForm" action=""
+                                                                                    method="post"
+                                                                                    enctype="multipart/form-data"
+                                                                                    class="form-horizontal">
+                                                                                    <!-- <div class="form-group row">
+                                                                                <label class="col-md-3 col-form-label">Tipo</label>
+                                                                                <div class="col-md-9">
+                                                                                    <p class="form-control-static">{{res.descripcion_tipo}}</p>
+                                                                                </div>
+                                                                            </div> -->
+                                                                                    <div class="row" align="left">
+                                                                                        <label
+                                                                                            class="col-md-12"><strong>Tipo</strong></label>
+                                                                                        <p class="col-md-12"
+                                                                                            align="justify">
+                                                                                            {{res.descripcion_tipo}}</p>
+                                                                                    </div>
+                                                                                    <div class="row" align="left">
+                                                                                        <label class="col-md-12">
+                                                                                            <strong>N°Resolucion</strong></label>
+                                                                                        <p class="col-md-12"
+                                                                                            align="justify">
+                                                                                            {{res.num_resolucion}}</p>
+                                                                                    </div>
+                                                                                    <!--<div class="form-group row">
+                                                                                <label class="col-md-3 col-form-label" for="text-input">N°Resolucion</label>
+                                                                                <div class="col-md-9">
+                                                                                    <p class="form-control-static">{{res.num_resolucion}}</p>
+                                                                                </div>
+                                                                            </div> -->
+                                                                                    <div class="row" align="left">
+                                                                                        <label class="col-md-12 ">
+                                                                                            <strong>N°Expediente</strong></label>
+                                                                                        <p class="col-md-12"
+                                                                                            align="justify">
+                                                                                            {{res.num_expediente}}</p>
+                                                                                    </div>
+                                                                                    <div class="row" align="left">
+                                                                                        <label
+                                                                                            class="col-md-12"><strong>Fecha
+                                                                                                resolucion</strong></label>
+                                                                                        <p class="col-md-12"
+                                                                                            align="justify">
+                                                                                            {{res.createdAt}}</p>
+                                                                                    </div>
+                                                                                    <div class="row" align="left">
+                                                                                        <label
+                                                                                            class="col-md-12"><strong>Dependencia</strong></label>
+                                                                                        <p class="col-md-12"
+                                                                                            align="justify">{{res.dep}}
+                                                                                        </p>
+
+                                                                                    </div>
+                                                                                    <div class="row" align="left">
+                                                                                        <label
+                                                                                            class="col-md-12"><strong>Oficina
+                                                                                                Origen</strong></label>
+                                                                                        <p class="col-md-12"
+                                                                                            align="justify">
+                                                                                            {{res.desc_oficina}}</p>
+
+                                                                                    </div>
+                                                                                    <div class="row" align="left">
+                                                                                        <label
+                                                                                            class="col-md-12"><strong>Descripcion</strong></label>
+                                                                                        <p class="col-md-12"
+                                                                                            align="justify">
+                                                                                            {{res.descripcion_resolucion}}
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                    <div class="row" align="left">
+                                                                                        <label
+                                                                                            class="col-md-12"><strong>Motivo</strong></label>
+                                                                                        <p class="col-md-12"
+                                                                                            align="justify">
+                                                                                            {{res.descripcion_motivo}}
+                                                                                        </p>
+                                                                                    </div>
+
+
+                                                                                    <!-- <div class="row">
+                                                                                        <div class="col-md-12"
+                                                                                            align="right">
+                                                                                            <button type="button"
+                                                                                                (click)="setRatificada()"
+                                                                                                class="btn btn-primary mr-1">{{swRatificada==true ? 'Ver Resolucion' : 'Ver Ratificada'}}</button>
+                                                                                        </div>
+                                                                                    </div> -->
+
+                                                                                </form>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="row" align="center">
+                                                                                    <label class="col-md-12"><strong>Vista
+                                                                                            previa</strong></label>
+                                                                                </div>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+
+                                                                                        <pdf-viewer [src]="pdfSrc"
+                                                                                            [show-all]="false"
+                                                                                            [render-text]="false"
+                                                                                            [original-size]="false"
+                                                                                            [page]="1" [zoom]="1.0"
+                                                                                            style="display:block">
+                                                                                        </pdf-viewer>
+
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+
+
+
+                                                                    <!-- <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" (click)="largeModal.hide()">Close</button>
+                                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                                    </div>-->
+                                                                </div>
+                                                                <!-- /.modal-content -->
+                                                            </div>
+                                                            <!-- /.modal-dialog -->
+                                                        </div>
+                                                        <!-- /.modal -->
+
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                        <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--/.col-->
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                </form>
+            </div>
+
+
+
+
+
+
+            <!--<div>
+                <div *ngFor="let motivo of motivos ">
+                    <a href="# ">
+                    {{ motivo.nombre_motivo}}
+
+                   </a>
+                </div>
+                <button (click)="getMotivos(page) ">boton</button>
+                <ul>
+                    <li *ngFor="let motivo of motivos ">
+                        nombre_motivo: {{motivo.nombre_motivo}}
+
+                    </li>
+                </ul>
+
+                <div class="col-md-4 ">
+                    <select id="select1 " name="select1 " class="form-control ">
+                              <option [value]="motivo.id_motivo " *ngFor="let motivo of motivos ">{{motivo.nombre_motivo}}</option>
+                            </select>
+                </div>
+            </div>
+  -->
+
+
+        </div>
+    </div>
+
+    <!--/.col-->
+</div>

@@ -1,0 +1,281 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+
+            <div class="alert alert-success" *ngIf="status =='success' ">
+                Registro completado correctamente , <a [routerLink]="['/']">Ve tu resolucion guardada</a>
+            </div>
+
+            <form #registerForm="ngForm" action="" method="post" enctype="multipart/form-data" class="form-horizontal"
+                (ngSubmit)="registrar(registerForm)">
+                <div class="card-header">
+                    <strong>Datos Principales</strong>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="tipo">Tipo de Resolucion</label>
+                        <div class="col-md-6">
+                            <div *ngIf="_userService.usuario.codperfil==231">JEFATURAL </div>
+                            <div *ngIf="_userService.usuario.codperfil==232">DECANAL </div>
+                            <div *ngIf="_userService.usuario.codperfil==233">RECTORAL </div>
+                            <div *ngIf="_userService.usuario.codperfil==234">DIRECTORAL </div>
+                            <!-- {{_userService.usuario.codperfil}} -->
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input" required>N° General de
+                            Resolución</label>
+                        <div class="col-md-6">
+
+                            <input type="text" id="text-input0" name="general" #numero="ngModel" class="form-control"
+                                placeholder="ejem: 1079-DGA-18" [(ngModel)]="resolucion.num_general_resolucion"
+                                pattern="[0-9]+[-]*[\/]*[a-zA-Z]+[-][a-zA-Z]*[\/]*[-]*[0-9]{2,4}" required>
+                            <span *ngIf="numero.errors?.required  && numero.touched"
+                                style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+
+                            <div *ngIf="numero.errors?.pattern">
+                                No cumple el formato establecido.
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input1" required>N° de Resolución</label>
+                        <div class="col-md-6">
+                            <input type="text" id="text-input1" name="resolucion" #numeroR="ngModel"
+                                class="form-control" placeholder="ejem: 1079-DGA-18"
+                                [(ngModel)]="resolucion.num_resolucion" pattern="[0-9]+[-]*[\/]*[a-zA-Z]+[-][a-zA-Z]*[\/]*[-]*[0-9]{2,4}"
+                                required>
+                            <span *ngIf="numeroR.errors?.required  && numeroR.touched"
+                                style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+
+                            <div *ngIf="numeroR.errors?.pattern">
+                                No cumple el formato establecido.
+                            </div>
+                        </div>
+
+                        <!-- <span *ngIf="!numero.valid  && numero.touched"> Este campo es obligatorio </span> -->
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="text-input2" required>N° de Expediente</label>
+                        <div class="col-md-6">
+                            <input type="text" id="text-input2" name="expediente" #numeroE="ngModel"
+                                class="form-control" placeholder="ejem: 12507-DGA-18"
+                                [(ngModel)]="resolucion.expediente_resolucion"
+                                pattern="[0-9]+[-]*[\/]*[a-zA-Z]+[-][a-zA-Z]*[\/]*[-]*[0-9]{2,4}" required>
+                            <span *ngIf="numeroE.errors?.required  && numeroE.touched"
+                                style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+
+                            <div *ngIf="numeroE.errors?.pattern">
+                                No cumple el formato establecido.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="date-input">Fecha resolucion</label>
+                        <div class="col-md-6">
+                            <input class="form-control" id="date-input" type="date" #createAt="ngModel"
+                                name="date-input" placeholder="date" [(ngModel)]="resolucion.fecha_resolucion"
+                                required />
+                            <span *ngIf="createAt.errors?.required  && createAt.touched"
+                                style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="textarea-input">Descripcion</label>
+                        <div class="col-md-6">
+                            <textarea id="textarea-input" name="descripcion" #descripcion="ngModel" rows="5"
+                                class="form-control" placeholder="" [(ngModel)]="resolucion.descripcion_resolucion"
+                                required></textarea>
+                            <span *ngIf="descripcion.errors?.required  && descripcion.touched"
+                                style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="origen">Oficina de Origen</label>
+                        <div class="col-md-6">
+                            <select id="origen" name="origen"   width="25%" class="form-control form-control-lg"
+                                [(ngModel)]="optionOrigen" (change)="changeOficina()">
+                                <option [value]="office.id_area " *ngFor="let office of depYunid ">
+                                    {{office.area_display_name}}</option> -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="motivo">Motivo</label>
+                        <div class="col-md-6">
+                            <select id="motivo" name="motivo" class="form-control form-control-lg"
+                                [(ngModel)]="optionMotivo" (change)="changeMotivo()">
+                                <option [value]="motivo.cod_motivo " *ngFor="let motivo of motivos ">
+                                    {{motivo.tipresmotdes}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--<div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="day-input">Numero de dias </label>
+                        <div class="col-md-9">
+                            <input type="text" id="numeroDias" name="day-input" class="form-control"
+                                placeholder="Numero de dias" required>
+
+                        </div>
+                    </div> -->
+
+                </div>
+
+
+
+                <div class="card-header">
+                    <strong>Asociar Persona</strong>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="nombres">Nombres </label>
+                        <div class="col-md-6">
+                            <input type="text" id="nombres" name="name-input" class="form-control" #nombres="ngModel"
+                                rows="9" class="form-control" placeholder="Nombres" [(ngModel)]="nom_per" required>
+
+                            <span *ngIf="nombres.errors?.required  && nombres.touched"
+                                style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="apellidos">Apellidos </label>
+                        <div class="col-md-6">
+                            <input type="text" id="apellidos" name="lastname-input" class="form-control"
+                                #apellidos="ngModel" rows="9" class="form-control" placeholder="Apellidos"
+                                [(ngModel)]="ape_per" required>
+
+                            <span *ngIf="apellidos.errors?.required  && apellidos.touched"
+                                style="color: red; font-size: 12px;"> Este campo es obligatorio </span>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="dni">N° de DNI </label>
+                        <div class="col-md-6">
+                            <input type="text" id="dni" name="dni-input" class="form-control" #dni="ngModel" rows="9"
+                                class="form-control" placeholder="DNI" [(ngModel)]="dni_per" required>
+
+                            <span *ngIf="dni.errors?.required  && dni.touched" style="color: red; font-size: 12px;">
+                                Este campo es obligatorio </span>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--
+                <div class="card-header">
+                <strong>Datos Complementarios</strong>
+            </div>
+            <div class="card-body">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="select3">Requiere ratificacion</label>
+                        <div class="col-md-9">
+                            <select id="select2" name="select2" class="form-control form-control-lg">
+                              <option value="0">Si</option>
+                              <option value="1">No</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="select3">Registar en legajo</label>
+                        <div class="col-md-9">
+                            <select id="select2" name="select2" class="form-control form-control-lg">
+                                  <option value="0">Si</option>
+                                  <option value="1">No</option>
+
+                                </select>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </form>
+            </div>
+           -->
+
+
+                <div class="card-header">
+                    <strong>Documentos</strong>
+                </div>
+                <div class="card-body">
+                    <!-- <form action="" method="post" enctype="multipart/form-data" class="form-horizontal"> -->
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="file-input">Adjuntar resolucion</label>
+                        <div class="col-md-3">
+                            <input type="file" id="file-input" name="file-input" accept=".pdf"
+                                (change)="uploadResolucion($event)">
+                            <p>Admite solo formato pdf</p>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="file-multiple-input">Adjuntar ratificada</label>
+                        <div class="col-md-3">
+
+                            <input type="file" id="file-input" name="file-input" accept=".pdf"
+                                [(ngModel)]="resolucion.anexo_resolucion">
+                            <p>Tamaño máximo permitido: 20MB</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="row align-items-center">
+
+
+                        <div class="col-4 ">
+                            <button type="button" class="btn btn-block btn-secondary"
+                                (click)="clean(registerForm)">Limpiar</button>
+                        </div>
+                        <div class="col-4 ">
+                            <button type="button" class="btn btn-block btn-danger active"
+                                (click)="cancelar()">Cancelar</button>
+                        </div>
+                        <div class="col-4 ">
+                            <button type="submit" class="btn btn-block btn-primary"><mat-spinner style="float:left; margin-right: 10px" *ngIf="spin" [diameter]="20" ></mat-spinner> Registrar</button>
+                        </div>
+                    
+
+                     
+
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+</div>
